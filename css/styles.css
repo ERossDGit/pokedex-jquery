@@ -56,10 +56,10 @@ link active color:  #ffff00
 }
 
 /* button formatting */
-button {
+/* button {
   height: 50px;
   width: 200px;
-}
+} */
 
 #modal-container {
   display: none;
