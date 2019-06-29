@@ -51,7 +51,7 @@ var pokemonRepository = (function () {
       var $newListElement = $('<li class ="pokemon-list__item"></li>');
 
       // create button element and add name to innerText
-      var newButtonArgument = '<button >' + pokemon_item.name + '</button>';
+      var newButtonArgument = '<button type="button" class="btn btn-primary btn-lg btn-block">' + pokemon_item.name + '</button>';
       var $newButtonElement = $(newButtonArgument);
 
       // append button to list element
@@ -93,7 +93,7 @@ var pokemonRepository = (function () {
     var $modal = $('<div class="modal"></div>');
 
     // Add the content to the modal
-    var $closeButtonElement = $('<button class="modal-close">Close</button>');
+    var $closeButtonElement = $('<button type="button" class="btn btn-link modal-close">Close</button>');
     $closeButtonElement.on('click', hideModal);
 
     var $nameElement = $('<h1>' + name + '</h1>');
