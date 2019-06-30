@@ -14,7 +14,9 @@ var pokemonRepository = (function () {
             detailsUrl: item.url
           };
           add(pokemon);
-          addListItem(pokemon);
+          loadDetails(pokemon).then(function () {
+            addListItem(pokemon);
+          });
         });
       },
       error: function(e) {
@@ -51,7 +53,7 @@ var pokemonRepository = (function () {
       var $newListElement = $('<li class ="pokemon-list__item"></li>');
 
       // create button element and add name to innerText
-      var newButtonArgument = '<button type="button" class="btn btn-primary btn-lg btn-block">' + pokemon_item.name + '</button>';
+      var newButtonArgument = '<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" data-name=' + pokemon_item.name + ' data-height=' + pokemon_item.height + ' data-imageurl=' + pokemon_item.imageUrl + ' >' + pokemon_item.name + '</button>';
       var $newButtonElement = $(newButtonArgument);
 
       // append button to list element
@@ -60,18 +62,6 @@ var pokemonRepository = (function () {
       //select the unordered list in the DOM and append list item
       $('.pokemon-list').append($newListElement);
 
-      // add click event handler to the new button
-      $newButtonElement.on('click', function (event) {
-        showDetails(pokemon_item);
-      })
-
-  }
-
-  // write the pokemon details to the console log
-  function showDetails(pokemon) {
-    loadDetails(pokemon).then(function () {
-      showModal(pokemon.name, pokemon.height, pokemon.imageUrl);
-    });
   }
 
   function loadDetails(item) {
@@ -86,48 +76,19 @@ var pokemonRepository = (function () {
       });
   }
 
-  function showModal(name, height, imgUrl) {
-    // clear existing content
-    $('#modal-container').html('');
-
-    var $modal = $('<div class="modal"></div>');
-
-    // Add the content to the modal
-    var $closeButtonElement = $('<button type="button" class="btn btn-link modal-close">Close</button>');
-    $closeButtonElement.on('click', hideModal);
-
-    var $nameElement = $('<h1>' + name + '</h1>');
+  $('#exampleModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var name = button.data('name') // Extract info from data-* attributes
+    var height = button.data('height') // Extract info from data-* attributes
+    var image = button.data('imageurl') // Extract info from data-* attributes
+    var modal = $(this)
+    modal.find('.modal-body').html('')
+    modal.find('.modal-title').text(name)
 
     var $heightElement = $('<p> Height: ' + height + '</p>');
-
-    var $imageElement = $('<img src=' + imgUrl + '></img>');
-
-    $modal.append($closeButtonElement);
-    $modal.append($nameElement);
-    $modal.append($heightElement);
-    $modal.append($imageElement);
-    $('#modal-container').append($modal);
-
-    $('#modal-container').addClass('is-visible');
-
-  }
-  function hideModal() {
-    $('#modal-container').removeClass('is-visible');
-  }
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && $('#modal-container').hasClass('is-visible')) {
-      hideModal();
-    }
-  });
-
-  $('#modal-container').on('click', (e) => {
-    // Since this is also triggered when clicking INSIDE the modal container,
-    // We only want to close if the user clicks directly on the overlay
-    var $target = $(e.target);
-    if ($target.is($('#modal-container'))) {
-      hideModal();
-    }
+    var $imageElement = $('<img src=' + image + '></img>');
+    modal.find('.modal-body').append($heightElement)
+    modal.find('.modal-body').append($imageElement)
   });
 
   return {
