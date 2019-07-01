@@ -29,11 +29,3 @@ link active color:  #ffff00
   width: 100%;
   padding: 20px
 }
-
-.pokemon-list {
-  list-style: none;
-}
-
-.pokemon-list__item {
-    padding: 10px;
-}
