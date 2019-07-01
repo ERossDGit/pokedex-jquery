@@ -50,7 +50,7 @@ var pokemonRepository = (function () {
   function addListItem(pokemon_item) {
 
       // create list element
-      var $newListElement = $('<li class ="pokemon-list__item"></li>');
+      var $newListElement = $('<li class ="list-group-item"></li>');
 
       // create button element and add name to innerText
       var newButtonArgument = '<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" data-name=' + pokemon_item.name + ' data-height=' + pokemon_item.height + ' data-imageurl=' + pokemon_item.imageUrl + ' >' + pokemon_item.name + '</button>';
@@ -60,7 +60,7 @@ var pokemonRepository = (function () {
       $newListElement.append($newButtonElement)
 
       //select the unordered list in the DOM and append list item
-      $('.pokemon-list').append($newListElement);
+      $('.list-group').append($newListElement);
 
   }
 
